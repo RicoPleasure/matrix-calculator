@@ -26,22 +26,23 @@
                     </.form>
                 </div>
                 
-                <button type="button" class="border p-4 rounded-xl"  phx-click="transposta">Inversa</button>
+                <button type="button" class="border p-4 rounded-xl"  phx-click="inversa">Inversa</button>
 
         </div>
     </div>
 
     <div class="mt-8 flex flex-col align-items">
-            <h1 class="p-4 text-xl">Resultado:</h1>
             <%= if Map.has_key?(assigns, :result) do %>
                 <%= case @result_type do %>
                     <% :single -> %>
+                        <h1 class="p-8 text-xl">Resultado:</h1> 
                         <div class="w-full flex justify-center"><%= @result %></div>
                     <% :grid -> %>
+                        <h1 class="p-8 text-xl">Resultado:</h1>
                         <div class="grid grid-cols-3 gap-10">
                             <%= for row <- @result do %>
                                 <%= for elem <- row do %>
-                                    <div class=""><%= elem %></div>
+                                    <div class="border w-14 h-10 flex justify-self-center items-center rounded-xl p-4"><%= elem %></div>
                                 <%end%>     
                             <%end%>
                         </div> 

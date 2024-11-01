@@ -33,6 +33,7 @@ defmodule MatrixCalculatorElixirWeb.Calculator.Index do
     ])
 
     result |> to_string()
+
     {:noreply, socket |> assign(:result, result) |> assign(:result_type, :grid)}
   end
 
@@ -47,8 +48,19 @@ defmodule MatrixCalculatorElixirWeb.Calculator.Index do
       [matrix["c1"] |> String.to_integer(),matrix["c2"] |> String.to_integer(),matrix["c3"] |> String.to_integer()]
     ])
 
-    IO.inspect(matrix)
-    IO.inspect(result)
+    {:noreply, socket |> assign(:result, result) |> assign(:result_type, :grid)}
+  end
+
+  # Inverse
+
+  def handle_event("inversa", _params, socket) do
+    matrix = socket.assigns.matrix
+    result = Matrix.inverse([
+      [matrix["a1"] |> String.to_integer(),matrix["a2"] |> String.to_integer(),matrix["a3"] |> String.to_integer()],
+      [matrix["b1"] |> String.to_integer(),matrix["b2"] |> String.to_integer(),matrix["b3"] |> String.to_integer()],
+      [matrix["c1"] |> String.to_integer(),matrix["c2"] |> String.to_integer(),matrix["c3"] |> String.to_integer()]
+    ])
+
     {:noreply, socket |> assign(:result, result) |> assign(:result_type, :grid)}
   end
 
