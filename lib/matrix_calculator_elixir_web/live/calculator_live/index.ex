@@ -64,6 +64,16 @@ defmodule MatrixCalculatorElixirWeb.Calculator.Index do
     {:noreply, socket |> assign(:result, result) |> assign(:result_type, :grid)}
   end
 
+  # Limpar
+
+  def handle_event("limpar", _params, socket) do
+
+    clean_matrix = %{a1: 0, a2: 0, a3: 0, b1: 0, b2: 0, b3: 0, c1: 0, c2: 0, c3: 0}
+    clean_constant = %{const: 0}
+
+    {:noreply, socket |> assign(:matrix, clean_matrix) |> assign(:constantvalue, clean_constant)}
+  end
+
   # Change inputs
 
   def handle_event("change-matrix",params,socket) do

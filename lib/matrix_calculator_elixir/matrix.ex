@@ -22,7 +22,7 @@ defmodule Matrix do
   def multiplyByConstant(_constant, []), do: []
 
   def multiplyByConstant(constant,[linha | restoLinhas]) do
-    [Enum.map(linha, fn n -> Float.ceil(n * constant, 3) end) | multiplyByConstant(constant, restoLinhas)]
+    [Enum.map(linha, fn n -> n * constant end) | multiplyByConstant(constant, restoLinhas)]
   end
 
   # Transformar matriz na transposta #

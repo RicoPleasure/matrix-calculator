@@ -1,5 +1,5 @@
 <div class="flex w-full items-center flex-col">
-    <div class="flex flex-col items-center">
+    <div class="flex flex-col items-center w-96">
         <.form for={@form} phx-change="change-matrix">
             <div class="grid grid-cols-3 grid-rows-3 gap-4 w-52">
                 <.input type="number" field={@form[:a1]} />
@@ -21,7 +21,7 @@
                     <button type="button" class="w-3/4 p-4 " phx-click="multiply-by">
                     Multiplicar por 
                     </button>
-                    <.form for={@constant} phx-change="change-constant" class="w-1/4 pr-6">
+                    <.form for={@constant} phx-change="change-constant" class="w-1/4 p-0 mr-1">
                         <.input type="number" field={@constant[:const]} />
                     </.form>
                 </div>
@@ -32,17 +32,18 @@
     </div>
 
     <div class="mt-8 flex flex-col align-items">
-            <%= if Map.has_key?(assigns, :result) do %>
+<%#<button type="button" class="border px-12 py-4 rounded-xl" phx-click="limpar">Limpar</button>%>  
+          <%= if Map.has_key?(assigns, :result) do %>
                 <%= case @result_type do %>
                     <% :single -> %>
                         <h1 class="p-8 text-xl">Resultado:</h1> 
                         <div class="w-full flex justify-center"><%= @result %></div>
                     <% :grid -> %>
-                        <h1 class="p-8 text-xl">Resultado:</h1>
+                        <h1 class="p-8 text-center text-xl">Resultado:</h1>
                         <div class="grid grid-cols-3 gap-10">
                             <%= for row <- @result do %>
                                 <%= for elem <- row do %>
-                                    <div class="border w-14 h-10 flex justify-self-center items-center rounded-xl p-4"><%= elem %></div>
+                                    <div class="border w-18 h-14 flex justify-self-center items-center rounded-xl p-4"><%= elem %></div>
                                 <%end%>     
                             <%end%>
                         </div> 
