@@ -1,5 +1,23 @@
 defmodule Matrix do
 
+  # Validate if it is a matrix
+
+  def isValid([[]]), do: true
+  def isValid([[_]]), do: true
+
+  def isValid([first_row | rest]) do
+    Enum.all?(rest, fn row -> length(first_row) == length(row) end)
+  end
+
+  # Validate if it is a square matrix
+
+  def isSquare([[]]), do: true
+  def isSquare([[_]]), do: true
+
+  def isSquare(matrix) do
+    Enum.all?(matrix, fn row -> length(matrix) == length(row) end)
+  end
+
   # Multiplicar matriz por uma constante #
   def multiplyByConstant(_constant, []), do: []
 
@@ -35,6 +53,36 @@ defmodule Matrix do
     |> Enum.map(fn {x, y} -> x * y end)
     |> Enum.sum()
   end
+
+  # Determinantes
+
+  ## Call/Validation Function
+
+  def determinant(matrix) do
+    if isSquare(matrix) do
+      do_determinant(matrix)
+    else
+      {:error, "The matrix must be square to be able to calculate the determinant"}
+    end
+  end
+
+  ## Core function
+  defp do_determinant([[]]), do: 1
+  defp do_determinant([[a]]), do: a
+
+  defp do_determinant(matrix = [[x | xs] | _]) do
+    Enum.with_index([x | xs])
+    |> Enum.reduce(0, fn {a, j}, acc ->
+      sign = if rem(j, 2) == 0, do: 1, else: -1
+      submatrix = minor_matrix(matrix, j)
+      acc + sign * a * do_determinant(submatrix)
+    end)
+  end
+
+  defp minor_matrix([_ | rest], j) do
+    rest |> Enum.map(&List.delete_at(&1, j))
+  end
+
 
   # Inversa de uma matriz
 

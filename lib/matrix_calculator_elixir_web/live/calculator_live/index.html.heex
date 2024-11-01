@@ -1,0 +1,52 @@
+<div class="flex w-full items-center flex-col">
+    <div class="flex flex-col items-center">
+        <.form for={@form} phx-change="change-matrix">
+            <div class="grid grid-cols-3 grid-rows-3 gap-4 w-52">
+                <.input type="number" field={@form[:a1]} />
+                <.input type="number" field={@form[:a2]} />
+                <.input type="number" field={@form[:a3]} />
+                <.input type="number" field={@form[:b1]} />
+                <.input type="number" field={@form[:b2]} />
+                <.input type="number" field={@form[:b3]} />
+                <.input type="number" field={@form[:c1]} />
+                <.input type="number" field={@form[:c2]} />
+                <.input type="number" field={@form[:c3]} />
+            </div>
+        </.form>
+
+        <div class="grid grid-cols-2 gap-2 justify-center mt-4 w-full">
+                <button type="button" class="border p-4 rounded-xl"  phx-click="determinante">Determinante</button>
+                <button type="button" class="border p-4 rounded-xl"  phx-click="transposta">Transposta</button>
+                <div class="flex w-full border rounded-xl">
+                    <button type="button" class="w-3/4 p-4 " phx-click="multiply-by">
+                    Multiplicar por 
+                    </button>
+                    <.form for={@constant} phx-change="change-constant" class="w-1/4 pr-6">
+                        <.input type="number" field={@constant[:const]} />
+                    </.form>
+                </div>
+                
+                <button type="button" class="border p-4 rounded-xl"  phx-click="transposta">Inversa</button>
+
+        </div>
+    </div>
+
+    <div class="mt-8 flex flex-col align-items">
+            <h1 class="p-4 text-xl">Resultado:</h1>
+            <%= if Map.has_key?(assigns, :result) do %>
+                <%= case @result_type do %>
+                    <% :single -> %>
+                        <div class="w-full flex justify-center"><%= @result %></div>
+                    <% :grid -> %>
+                        <div class="grid grid-cols-3 gap-10">
+                            <%= for row <- @result do %>
+                                <%= for elem <- row do %>
+                                    <div class=""><%= elem %></div>
+                                <%end%>     
+                            <%end%>
+                        </div> 
+                <%end%>   
+            <%end%>
+    </div>
+    
+</div>

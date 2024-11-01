@@ -17,8 +17,7 @@ defmodule MatrixCalculatorElixirWeb.Router do
   scope "/", MatrixCalculatorElixirWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
-    get "/hello", HelloController, :index
+    live "/", Calculator.Index, :index
   end
 
   # Other scopes may use custom stacks.
