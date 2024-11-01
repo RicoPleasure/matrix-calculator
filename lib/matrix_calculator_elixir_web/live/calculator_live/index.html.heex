@@ -15,10 +15,10 @@
         </.form>
 
         <div class="grid grid-cols-2 gap-2 justify-center mt-4 w-full">
-                <button type="button" class="border p-4 rounded-xl"  phx-click="determinante">Determinante</button>
-                <button type="button" class="border p-4 rounded-xl"  phx-click="transposta">Transposta</button>
+                <button type="button" class="border p-4 rounded-xl text-md"  phx-click="determinante">Determinante</button>
+                <button type="button" class="border p-4 rounded-xl text-md"  phx-click="transposta">Transposta</button>
                 <div class="flex w-full border rounded-xl">
-                    <button type="button" class="w-3/4 p-4 " phx-click="multiply-by">
+                    <button type="button" class="w-3/4 p-4 text-md" phx-click="multiply-by">
                     Multiplicar por 
                     </button>
                     <.form for={@constant} phx-change="change-constant" class="w-1/4 p-0 mr-1">
@@ -26,15 +26,17 @@
                     </.form>
                 </div>
                 
-                <button type="button" class="border p-4 rounded-xl"  phx-click="inversa">Inversa</button>
+                <button type="button" class="border p-4 rounded-xl text-md"  phx-click="inversa">Inversa</button>
 
         </div>
     </div>
 
     <div class="mt-8 flex flex-col align-items">
-<%#<button type="button" class="border px-12 py-4 rounded-xl" phx-click="limpar">Limpar</button>%>  
+<%#<button type="button" class="border px-12 py-4 rounded-xl" phx-click="limpar">Limpar</button>    %>  
           <%= if Map.has_key?(assigns, :result) do %>
                 <%= case @result_type do %>
+                    <% :error -> %>
+                        <div class="w-full flex justify-center"><%= @result %></div>
                     <% :single -> %>
                         <h1 class="p-8 text-xl">Resultado:</h1> 
                         <div class="w-full flex justify-center"><%= @result %></div>

@@ -56,7 +56,7 @@ defmodule Matrix do
 
   # Determinantes
 
-  ## Call/Validation Function
+  # Call/Validation Function
 
   def determinant(matrix) do
     if isSquare(matrix) do
@@ -66,7 +66,7 @@ defmodule Matrix do
     end
   end
 
-  ## Core function
+  # Core function
   defp do_determinant([[]]), do: 1
   defp do_determinant([[a]]), do: a
 

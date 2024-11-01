@@ -42,26 +42,44 @@ defmodule MatrixCalculatorElixirWeb.Calculator.Index do
   def handle_event("multiply-by", _params, socket) do
     matrix = socket.assigns.matrix
     constant = socket.assigns.constantvalue
-    result = Matrix.multiplyByConstant(String.to_integer(constant["const"]), [
-      [matrix["a1"] |> String.to_integer(),matrix["a2"] |> String.to_integer(),matrix["a3"] |> String.to_integer()],
-      [matrix["b1"] |> String.to_integer(),matrix["b2"] |> String.to_integer(),matrix["b3"] |> String.to_integer()],
-      [matrix["c1"] |> String.to_integer(),matrix["c2"] |> String.to_integer(),matrix["c3"] |> String.to_integer()]
-    ])
 
-    {:noreply, socket |> assign(:result, result) |> assign(:result_type, :grid)}
+    if not is_nil(constant["const"]) and constant["const"] != "" and String.match?(constant["const"], ~r/^\d+$/) do
+
+      result = Matrix.multiplyByConstant(String.to_integer(constant["const"]), [
+        [matrix["a1"] |> String.to_integer(),matrix["a2"] |> String.to_integer(),matrix["a3"] |> String.to_integer()],
+        [matrix["b1"] |> String.to_integer(),matrix["b2"] |> String.to_integer(),matrix["b3"] |> String.to_integer()],
+        [matrix["c1"] |> String.to_integer(),matrix["c2"] |> String.to_integer(),matrix["c3"] |> String.to_integer()]
+      ])
+
+      {:noreply, socket |> assign(:result, result) |> assign(:result_type, :grid)}
+    else
+      result = "Escreva um valor para multiplicar por"
+
+      {:noreply, socket |> assign(:result, result) |> assign(:result_type, :error )}
+    end
+
   end
 
-  # Inverse
+  # Inversa
 
   def handle_event("inversa", _params, socket) do
     matrix = socket.assigns.matrix
-    result = Matrix.inverse([
+
+    if Matrix.determinant([
       [matrix["a1"] |> String.to_integer(),matrix["a2"] |> String.to_integer(),matrix["a3"] |> String.to_integer()],
       [matrix["b1"] |> String.to_integer(),matrix["b2"] |> String.to_integer(),matrix["b3"] |> String.to_integer()],
       [matrix["c1"] |> String.to_integer(),matrix["c2"] |> String.to_integer(),matrix["c3"] |> String.to_integer()]
-    ])
-
-    {:noreply, socket |> assign(:result, result) |> assign(:result_type, :grid)}
+    ]) != 0 do
+      result = Matrix.inverse([
+        [matrix["a1"] |> String.to_integer(),matrix["a2"] |> String.to_integer(),matrix["a3"] |> String.to_integer()],
+        [matrix["b1"] |> String.to_integer(),matrix["b2"] |> String.to_integer(),matrix["b3"] |> String.to_integer()],
+        [matrix["c1"] |> String.to_integer(),matrix["c2"] |> String.to_integer(),matrix["c3"] |> String.to_integer()]
+      ])
+      {:noreply, socket |> assign(:result, result) |> assign(:result_type, :grid)}
+    else
+      result = "A função não admite inversa pois det(A) = 0"
+      {:noreply, socket |> assign(:result, result) |> assign(:result_type, :error)}
+    end
   end
 
   # Limpar
@@ -76,11 +94,11 @@ defmodule MatrixCalculatorElixirWeb.Calculator.Index do
 
   # Change inputs
 
-  def handle_event("change-matrix",params,socket) do
+  def handle_event("change-matrix", params, socket) do
     {:noreply, socket |> assign(:matrix, params)}
   end
 
-  def handle_event("change-constant",params,socket) do
+  def handle_event("change-constant", params, socket) do
     {:noreply, socket |> assign(:constantvalue, params)}
   end
 
