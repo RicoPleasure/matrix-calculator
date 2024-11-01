@@ -13,6 +13,6 @@ I am trying to learn Elixir and Phoenix so I started this matrix calculator. It 
 
 ## Functionalities:
 
+- Determinant
 - Transpose
 - Multiplication for a constant
-- Multiplication between matrices
