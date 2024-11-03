@@ -6,10 +6,16 @@ I'm learning Elixir and Phoenix so I decided to make this calculator. It is usef
 
 ## Functionalities:
 
+### Single Matrix Operations
 - Determinant
 - Transpose
 - Multiplication for a constant
 - Inverse function
+
+### Matrices Operations
+- Multiplication
+- Sum
+- Subtraction
 
 # How to run
 To start your Phoenix server:

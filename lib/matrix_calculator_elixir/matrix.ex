@@ -33,20 +33,6 @@ defmodule Matrix do
     [ [x | Enum.map(restoLinhas, &hd/1)] | transpose([xs | Enum.map(restoLinhas, &tl/1)])]
   end
 
-  # Multiplicar matriz por outra matriz #
-  def multiplyByOtherMatrix([],_), do: []
-  def multiplyByOtherMatrix(_,[]), do: []
-
-  def multiplyByOtherMatrix(matrix1, matrix2) do
-    matrix2_transposed = transpose(matrix2)
-    result = for row <- matrix1 do
-      for col <- matrix2_transposed, into: [] do
-        dotProduct(row,col)
-      end
-    end
-    result
-  end
-
   defp dotProduct(row, col) do
     row
     |> Enum.zip(col)
@@ -113,5 +99,48 @@ defmodule Matrix do
       multiplyByConstant(1 / determinant_value, c_transpose)
     end
   end
+
+  # Operações entre matrizes
+
+  # Multiplicar matriz por outra matriz #
+  def multiplyByOtherMatrix([],_), do: []
+  def multiplyByOtherMatrix(_,[]), do: []
+
+  def multiplyByOtherMatrix(matrix1, matrix2) do
+    matrix2_transposed = transpose(matrix2)
+    result = for row <- matrix1 do
+      for col <- matrix2_transposed, into: [] do
+        dotProduct(row,col)
+      end
+    end
+    result
+  end
+
+  # Somar matriz por outra matriz #
+  def sumMatrices([],_), do: []
+  def sumMatrices(_,[]), do: []
+
+  def sumMatrices(matrix1, matrix2) do
+    result = for row <- matrix1 do
+      for col <- matrix2, into: [] do
+        hd(row) + hd(col)
+      end
+    end
+    result
+  end
+
+  # Subtrair matriz por outra matriz
+  def subtractMatrices([],_), do: []
+  def subtractMatrices(_,[]), do: []
+
+  def subtractMatrices(matrix1, matrix2) do
+    result = for row <- matrix1 do
+      for col <- matrix2, into: [] do
+        hd(row) - hd(col)
+      end
+    end
+    result
+  end
+
 
 end

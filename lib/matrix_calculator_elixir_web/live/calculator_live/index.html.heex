@@ -1,39 +1,83 @@
-<div class="flex w-full items-center flex-col">
-    <div class="flex flex-col items-center w-96">
-        <.form for={@form} phx-change="change-matrix">
-            <div class="grid grid-cols-3 grid-rows-3 gap-4 w-52">
-                <.input type="number" field={@form[:a1]} />
-                <.input type="number" field={@form[:a2]} />
-                <.input type="number" field={@form[:a3]} />
-                <.input type="number" field={@form[:b1]} />
-                <.input type="number" field={@form[:b2]} />
-                <.input type="number" field={@form[:b3]} />
-                <.input type="number" field={@form[:c1]} />
-                <.input type="number" field={@form[:c2]} />
-                <.input type="number" field={@form[:c3]} />
-            </div>
-        </.form>
-
-        <div class="grid grid-cols-2 gap-2 justify-center mt-4 w-full">
-                <button type="button" class="border p-4 rounded-xl text-md"  phx-click="determinante">Determinante</button>
-                <button type="button" class="border p-4 rounded-xl text-md"  phx-click="transposta">Transposta</button>
-                <div class="flex w-full border rounded-xl">
-                    <button type="button" class="w-3/4 p-4 text-md" phx-click="multiply-by">
-                    Multiplicar por 
-                    </button>
-                    <.form for={@constant} phx-change="change-constant" class="w-1/4 p-0 mr-1">
-                        <.input type="number" field={@constant[:const]} />
-                    </.form>
+<div class="flex flex-col md:flex-row md:flex-col w-full items-center flex-col h-100">
+    <div class="flex flex-col md:flex-row justify-center gap-4">
+        <%#  Matrix 1 %>
+        <div class="flex flex-col items-center xl:w-96">
+            <.form for={@form1} phx-change="change-matrix1">
+                <div class="grid grid-cols-3 grid-rows-3 gap-4 w-52">
+                    <.input type="number" field={@form1[:a1]} />
+                    <.input type="number" field={@form1[:a2]} />
+                    <.input type="number" field={@form1[:a3]} />
+                    <.input type="number" field={@form1[:b1]} />
+                    <.input type="number" field={@form1[:b2]} />
+                    <.input type="number" field={@form1[:b3]} />
+                    <.input type="number" field={@form1[:c1]} />
+                    <.input type="number" field={@form1[:c2]} />
+                    <.input type="number" field={@form1[:c3]} />
                 </div>
-                
-                <button type="button" class="border p-4 rounded-xl text-md"  phx-click="inversa">Inversa</button>
+            </.form>
 
+            <div class="grid grid-cols-1 xl:grid-cols-2 gap-2 justify-center mt-4 w-full">
+                    <button type="button" class="border p-4 rounded-xl text-md hover:bg-gray-100 transition-all duration-150" phx-click="determinante" phx-value-source="matrix1">Determinante</button>
+                    <button type="button" class="border p-4 rounded-xl text-md hover:bg-gray-100 transition-all duration-150" phx-click="transposta" phx-value-source="matrix1">Transposta</button>
+                    <div class="flex w-full gap-2">
+                        <button type="button" class="w-3/4 p-4 text-md hover:bg-gray-100 transition-all duration-150  border rounded-xl" phx-click="multiply-by" phx-value-source="matrix1" phx-value-constant="constant1">
+                        Multiplicar 
+                        </button>
+                        <.form for={@constant1} phx-change="change-constant1" class="w-2/4 p-0 mr-1">
+                            <.input type="number" field={@constant1[:const]} />
+                        </.form>
+                    </div>
+                    
+                    <button type="button" class="border p-4 rounded-xl text-md hover:bg-gray-100 transition-all duration-150" phx-click="inversa" phx-value-source="matrix1">Inversa</button>
+            </div>
+        </div>
+
+        <div class="flex flex-col p-10 gap-1">
+            <button type="button" class="border p-4 rounded-xl text-md hover:bg-gray-100 transition-all duration-150"  phx-click="multiplicacao_matrizes">Multiplicação</button>
+            <button type="button" class="border p-4 rounded-xl text-md hover:bg-gray-100 transition-all duration-150"  phx-click="soma_matrizes">Soma</button>
+            <button type="button" class="border p-4 rounded-xl text-md hover:bg-gray-100 transition-all duration-150"  phx-click="subtracao_matrizes">Subtração</button>
+        </div>
+
+        <%#  Matrix 2 %>
+
+        <div class="flex flex-col items-center xl:w-96">
+            <.form for={@form2} phx-change="change-matrix2">
+                <div class="grid grid-cols-3 grid-rows-3 gap-4 w-52">
+                    <.input type="number" field={@form2[:a1]} />
+                    <.input type="number" field={@form2[:a2]} />
+                    <.input type="number" field={@form2[:a3]} />
+                    <.input type="number" field={@form2[:b1]} />
+                    <.input type="number" field={@form2[:b2]} />
+                    <.input type="number" field={@form2[:b3]} />
+                    <.input type="number" field={@form2[:c1]} />
+                    <.input type="number" field={@form2[:c2]} />
+                    <.input type="number" field={@form2[:c3]} />
+                </div>
+            </.form>
+
+            <div class="grid  grid-cols-1 xl:grid-cols-2 gap-2 justify-center mt-4 w-full">
+                    <button type="button" class="border p-4 rounded-xl text-md hover:bg-gray-100 transition-all duration-150" phx-click="determinante" phx-value-source="matrix2">Determinante</button>
+                    <button type="button" class="border p-4 rounded-xl text-md hover:bg-gray-100 transition-all duration-150" phx-click="transposta" phx-value-source="matrix2">Transposta</button>
+                    <div class="flex w-full gap-2">
+                        <button type="button" class="w-3/4 p-4 text-md hover:bg-gray-100 transition-all duration-150  border rounded-xl" phx-click="multiply-by" phx-value-source="matrix2" phx-value-constant="constant2">
+                        Multiplicar 
+                        </button>
+                        <.form for={@constant2} phx-change="change-constant2" class="w-2/4 p-0 mr-1">
+                            <.input type="number" field={@constant2[:const]} />
+                        </.form>
+                    </div>
+                    
+                    <button type="button" class="border p-4 rounded-xl text-md hover:bg-gray-100 transition-all duration-150" phx-click="inversa" phx-value-source="matrix2">Inversa</button>
+
+            </div>
         </div>
     </div>
 
+    <%# Resultados %>
+
     <div class="mt-8 flex flex-col align-items">
-<%#<button type="button" class="border px-12 py-4 rounded-xl" phx-click="limpar">Limpar</button>    %>  
-          <%= if Map.has_key?(assigns, :result) do %>
+<%#     <button type="button" class="border px-12 py-4 rounded-xl" phx-click="limpar">Limpar</button> 
+ %>          <%= if Map.has_key?(assigns, :result) do %>
                 <%= case @result_type do %>
                     <% :error -> %>
                         <div class="w-full flex justify-center"><%= @result %></div>
