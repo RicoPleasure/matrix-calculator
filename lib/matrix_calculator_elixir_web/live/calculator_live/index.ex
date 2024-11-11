@@ -46,8 +46,6 @@ defmodule MatrixCalculatorElixirWeb.Calculator.Index do
       [matrix["c1"] |> String.to_integer(),matrix["c2"] |> String.to_integer(),matrix["c3"] |> String.to_integer()]
     ])
 
-    result |> to_string()
-
     {:noreply, socket |> assign(:result, result) |> assign(:result_type, :grid)}
   end
 
@@ -68,7 +66,7 @@ defmodule MatrixCalculatorElixirWeb.Calculator.Index do
 
     if not is_nil(constant["const"]) and constant["const"] != "" and String.match?(constant["const"], ~r/^\d+$/) do
 
-      result = Matrix.multiplyByConstant(String.to_integer(constant["const"]), [
+      result = Matrix.multiply_by_constant(String.to_integer(constant["const"]), [
         [matrix["a1"] |> String.to_integer(),matrix["a2"] |> String.to_integer(),matrix["a3"] |> String.to_integer()],
         [matrix["b1"] |> String.to_integer(),matrix["b2"] |> String.to_integer(),matrix["b3"] |> String.to_integer()],
         [matrix["c1"] |> String.to_integer(),matrix["c2"] |> String.to_integer(),matrix["c3"] |> String.to_integer()]
@@ -117,7 +115,7 @@ defmodule MatrixCalculatorElixirWeb.Calculator.Index do
   def handle_event("multiplicacao_matrizes", _params, socket) do
     matrix1 = socket.assigns.matrix1
     matrix2 = socket.assigns.matrix2
-    result = Matrix.multiplyByOtherMatrix([
+    result = Matrix.multiply_by_other_matrix([
       [matrix1["a1"] |> String.to_integer(),matrix1["a2"] |> String.to_integer(),matrix1["a3"] |> String.to_integer()],
       [matrix1["b1"] |> String.to_integer(),matrix1["b2"] |> String.to_integer(),matrix1["b3"] |> String.to_integer()],
       [matrix1["c1"] |> String.to_integer(),matrix1["c2"] |> String.to_integer(),matrix1["c3"] |> String.to_integer()]
@@ -136,7 +134,7 @@ defmodule MatrixCalculatorElixirWeb.Calculator.Index do
   def handle_event("soma_matrizes", _params, socket) do
     matrix1 = socket.assigns.matrix1
     matrix2 = socket.assigns.matrix2
-    result = Matrix.sumMatrices([
+    result = Matrix.sum_matrices([
       [matrix1["a1"] |> String.to_integer(),matrix1["a2"] |> String.to_integer(),matrix1["a3"] |> String.to_integer()],
       [matrix1["b1"] |> String.to_integer(),matrix1["b2"] |> String.to_integer(),matrix1["b3"] |> String.to_integer()],
       [matrix1["c1"] |> String.to_integer(),matrix1["c2"] |> String.to_integer(),matrix1["c3"] |> String.to_integer()]
@@ -155,7 +153,7 @@ defmodule MatrixCalculatorElixirWeb.Calculator.Index do
   def handle_event("subtracao_matrizes", _params, socket) do
     matrix1 = socket.assigns.matrix1
     matrix2 = socket.assigns.matrix2
-    result = Matrix.subtractMatrices([
+    result = Matrix.subtract_matrices([
       [matrix1["a1"] |> String.to_integer(),matrix1["a2"] |> String.to_integer(),matrix1["a3"] |> String.to_integer()],
       [matrix1["b1"] |> String.to_integer(),matrix1["b2"] |> String.to_integer(),matrix1["b3"] |> String.to_integer()],
       [matrix1["c1"] |> String.to_integer(),matrix1["c2"] |> String.to_integer(),matrix1["c3"] |> String.to_integer()]
@@ -169,7 +167,10 @@ defmodule MatrixCalculatorElixirWeb.Calculator.Index do
     {:noreply, socket |> assign(:result, result) |> assign(:result_type, :grid)}
   end
 
-  # Limpar
+  # Clear button
+
+  # Form Validation
+
 
   # Change inputs
 

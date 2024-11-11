@@ -1,28 +1,28 @@
 defmodule Matrix do
 
-  # Validate if it is a matrix
+  # Valida se é uma matriz
 
-  def isValid([[]]), do: true
-  def isValid([[_]]), do: true
+  def is_valid([[]]), do: true
+  def is_valid([[_]]), do: true
 
-  def isValid([first_row | rest]) do
+  def is_valid([first_row | rest]) do
     Enum.all?(rest, fn row -> length(first_row) == length(row) end)
   end
 
-  # Validate if it is a square matrix
+  # Valida se é uma matriz quadrada
 
-  def isSquare([[]]), do: true
-  def isSquare([[_]]), do: true
+  def is_square([[]]), do: true
+  def is_square([[_]]), do: true
 
-  def isSquare(matrix) do
+  def is_square(matrix) do
     Enum.all?(matrix, fn row -> length(matrix) == length(row) end)
   end
 
   # Multiplicar matriz por uma constante #
-  def multiplyByConstant(_constant, []), do: []
+  def multiply_by_constant(_constant, []), do: []
 
-  def multiplyByConstant(constant,[linha | restoLinhas]) do
-    [Enum.map(linha, fn n -> n * constant end) | multiplyByConstant(constant, restoLinhas)]
+  def multiply_by_constant(constant,[linha | restoLinhas]) do
+    [Enum.map(linha, fn n -> n * constant end) | multiply_by_constant(constant, restoLinhas)]
   end
 
   # Transformar matriz na transposta #
@@ -33,7 +33,7 @@ defmodule Matrix do
     [ [x | Enum.map(restoLinhas, &hd/1)] | transpose([xs | Enum.map(restoLinhas, &tl/1)])]
   end
 
-  defp dotProduct(row, col) do
+  defp dot_product(row, col) do
     row
     |> Enum.zip(col)
     |> Enum.map(fn {x, y} -> x * y end)
@@ -42,17 +42,17 @@ defmodule Matrix do
 
   # Determinantes
 
-  # Call/Validation Function
+  # Função de chamada/validação
 
   def determinant(matrix) do
-    if isSquare(matrix) do
+    if is_square(matrix) do
       do_determinant(matrix)
     else
       {:error, "The matrix must be square to be able to calculate the determinant"}
     end
   end
 
-  # Core function
+  # Função core
   defp do_determinant([[]]), do: 1
   defp do_determinant([[a]]), do: a
 
@@ -96,51 +96,54 @@ defmodule Matrix do
 
       c_transpose = c |> transpose()
 
-      multiplyByConstant(1 / determinant_value, c_transpose)
+      multiply_by_constant(1 / determinant_value, c_transpose)
     end
   end
 
   # Operações entre matrizes
 
   # Multiplicar matriz por outra matriz #
-  def multiplyByOtherMatrix([],_), do: []
-  def multiplyByOtherMatrix(_,[]), do: []
+  def multiply_by_other_matrix([],_), do: []
+  def multiply_by_other_matrix(_,[]), do: []
 
-  def multiplyByOtherMatrix(matrix1, matrix2) do
+  def multiply_by_other_matrix(matrix1, matrix2) do
     matrix2_transposed = transpose(matrix2)
     result = for row <- matrix1 do
       for col <- matrix2_transposed, into: [] do
-        dotProduct(row,col)
+        dot_product(row, col)
       end
     end
     result
   end
 
   # Somar matriz por outra matriz #
-  def sumMatrices([],_), do: []
-  def sumMatrices(_,[]), do: []
+  def sum_matrices([],_), do: []
+  def sum_matrices(_,[]), do: []
 
-  def sumMatrices(matrix1, matrix2) do
-    result = for row <- matrix1 do
-      for col <- matrix2, into: [] do
-        hd(row) + hd(col)
+  def sum_matrices(matrix1, matrix2) do
+      result = for {row1, row2} <- Enum.zip(matrix1, matrix2) do
+        dot_sum(row1, row2)
       end
-    end
     result
+  end
+
+  defp dot_sum(row1, row2) do
+    for {x, y} <- Enum.zip(row1, row2), do: x + y
   end
 
   # Subtrair matriz por outra matriz
-  def subtractMatrices([],_), do: []
-  def subtractMatrices(_,[]), do: []
+  def subtract_matrices([],_), do: []
+  def subtract_matrices(_,[]), do: []
 
-  def subtractMatrices(matrix1, matrix2) do
-    result = for row <- matrix1 do
-      for col <- matrix2, into: [] do
-        hd(row) - hd(col)
+  def subtract_matrices(matrix1, matrix2) do
+      result = for {row1,row2} <- Enum.zip(matrix1, matrix2) do
+        dot_subtract(row1,row2)
       end
-    end
     result
   end
 
+  defp dot_subtract(row1, row2) do
+    for {x, y} <- Enum.zip(row1, row2), do: x - y
+  end
 
 end
