@@ -23,16 +23,12 @@ defmodule MatrixCalculatorElixirWeb.Calculator.Index do
       end
 
     result = Matrix.determinant([
-      [matrix["a1"] |> String.to_float(),matrix["a2"] |> String.to_float(),matrix["a3"] |> String.to_float()],
-      [matrix["b1"] |> String.to_float(),matrix["b2"] |> String.to_float(),matrix["b3"] |> String.to_float()],
-      [matrix["c1"] |> String.to_float(),matrix["c2"] |> String.to_float(),matrix["c3"] |> String.to_float()]
+      [matrix["a1"] |> String.to_integer(),matrix["a2"] |> String.to_integer(),matrix["a3"] |> String.to_integer()],
+      [matrix["b1"] |> String.to_integer(),matrix["b2"] |> String.to_integer(),matrix["b3"] |> String.to_integer()],
+      [matrix["c1"] |> String.to_integer(),matrix["c2"] |> String.to_integer(),matrix["c3"] |> String.to_integer()]
     ])
 
     {:noreply, socket |> assign(:result ,result) |> assign(:result_type, :single)}
-  end
-
-  def verifica_int_float(string) do
-    if  
   end
 
   # Transposta
